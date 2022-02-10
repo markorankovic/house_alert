@@ -13,14 +13,16 @@ export default function HomeScreen() {
                 data={people}
                 renderItem={
                     ({item}) => (
-                        <Button 
-                            title={item.name}
-                            onPress={
-                                () => {
-                                    console.log("Alerting " + item.name)
-                                }
-                            } 
-                        />
+                        <View style={styles.button}>
+                            <Button
+                                title={item.name}
+                                onPress={
+                                    () => {
+                                        console.log("Alerting " + item.name)
+                                    }
+                                } 
+                            />
+                        </View>
                     )
                 }
             />
@@ -37,5 +39,9 @@ const styles = StyleSheet.create({
     },
     list: {
         flexGrow: 0,
+        padding: 100
+    },
+    button: {
+        paddingBottom: 10,
     }
   });
