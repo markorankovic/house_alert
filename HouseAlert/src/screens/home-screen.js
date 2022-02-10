@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { FlatList, Button, View, Text, StyleSheet } from 'react-native';
-import { PeopleContext } from '../people-context'
+import { PeopleContext } from '../context/people-context'
 
 export default function HomeScreen() {
     const people = useContext(PeopleContext)
@@ -20,7 +20,7 @@ export default function HomeScreen() {
                                     console.log("Alerting " + item.name)
                                 }
                             } 
-                        />        
+                        />
                     )
                 }
             />

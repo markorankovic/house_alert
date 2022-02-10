@@ -10,7 +10,8 @@ export const PeopleProvider = ({ children }) => {
                     {id: 1, name: "Dad"},
                     {id: 2, name: "Mum"},
                     {id: 3, name: "Kat"},
-                    {id: 4, name: "Milan"}
+                    {id: 4, name: "Tom"},
+                    {id: 5, name: "Milan"}
                 ]      
             }
         >
