@@ -23,7 +23,9 @@ export const PeopleProvider = ({ children }) => {
     }, [])
 
     return (
-        <PeopleContext.Provider value={people}>
+        <PeopleContext.Provider
+            value={people}
+        >
             {children}
         </PeopleContext.Provider>
     )
