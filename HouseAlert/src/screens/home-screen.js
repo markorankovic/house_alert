@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
-import { FlatList, Button, View, Text, StyleSheet } from 'react-native';
-import { PeopleContext } from '../context/people-context'
+import { FlatList, Button, View, Text, StyleSheet } from 'react-native'
+import { PeopleContext } from '../context/people-context/people-context'
 
 export default function HomeScreen() {
     const people = useContext(PeopleContext)
@@ -44,4 +44,4 @@ const styles = StyleSheet.create({
     button: {
         paddingBottom: 10,
     }
-  });
+  })
