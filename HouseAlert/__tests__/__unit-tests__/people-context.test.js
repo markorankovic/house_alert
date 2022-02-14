@@ -1,4 +1,4 @@
-import { fetchPeopleAsync } from './people-context'
+import { fetchPeopleAsync } from '../../src/context/people-context/people-context'
 
 test('Fetch people', async () => {
     const people = await fetchPeopleAsync({ protocol: "http", ip: "localhost", port: "3000" })
