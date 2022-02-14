@@ -3,8 +3,9 @@ import React, { useEffect, useState } from 'react'
 
 export const PeopleContext = React.createContext()
 
-export async function fetchPeopleAsync(ip = "10.0.2.2") {
-    return axios.get("http://" + ip + ":3000/people/")
+export async function fetchPeopleAsync(header = { protocol: "http", ip: "10.0.2.2", port: "3000" }) {
+    const baseURL = header.protocol + "://" + header.ip + ":" + header.port
+    return axios.get(baseURL + "/people/")
     .then(people => {
         console.log("People: ", people.data)
         return people.data
