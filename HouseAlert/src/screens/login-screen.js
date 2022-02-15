@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { Button, View, TextInput, StyleSheet } from 'react-native'
 import { LoginContext } from '../context/login-context'
+import { Notifications } from 'react-native-notifications'
 
 export default function LoginScreen() {
     const loginContext = useContext(LoginContext) 
