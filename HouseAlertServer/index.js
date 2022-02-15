@@ -1,11 +1,21 @@
-const express = require('express')
-const app = express()
-const port = 3000
+const WebSocket = require('ws')
 
-app.get('/people', (req, res) => {
-    res.json(require('./mockPeople.json'))
-})
+const wss = new WebSocket.Server({ port: 8082 })
 
-app.listen(port, () => {
-    console.log(`House Alert Server listening on port ${port}!`)
+var users = require('./mockPeople.json').people
+
+wss.on('connection', ws => {
+    console.log('New client connected')
+
+    console.log(users)
+
+    ws.send(JSON.stringify(users))
+
+    ws.on('message', message =>
+        console.log("Hey client, how are you?")
+    )
+
+    ws.on('close', () => {
+        console.log('Client has disconnected')
+    })
 })

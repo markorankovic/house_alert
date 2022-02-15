@@ -1,0 +1,13 @@
+<html>
+    <body>
+        <script>
+            const client = new WebSocket('ws://localhost:8082')
+
+            client.addEventListener('open', () => {
+                console.log('We are connected!')
+            })
+
+            client.addEventListener('message', message => console.log(JSON.parse(message.data)))
+        </script>
+    </body>
+</html>
