@@ -13,11 +13,11 @@ export default function HomeScreen() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.welcome}>{'Welcome ' + login.user.name + '!'}</Text>
+            <Text style={styles.welcome}>{'Welcome ' + login?.user?.name ?? "Test" + '!'}</Text>
             <Text>Who do you want to alert?</Text>
             <FlatList
                 style={styles.list}
-                data={people.filter(person => person.id !== login.user.id)}
+                data={people?.filter(person => person.id !== login.user.id) ?? []}
                 renderItem={
                     ({item}) => (
                         <View style={styles.button}>
