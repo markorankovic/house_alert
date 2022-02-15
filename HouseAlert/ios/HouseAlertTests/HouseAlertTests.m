@@ -7,11 +7,11 @@
 #define TIMEOUT_SECONDS 600
 #define TEXT_TO_LOOK_FOR @"Welcome to React"
 
-@interface HouseAlert_ReactNativeTests : XCTestCase
+@interface HouseAlertTests : XCTestCase
 
 @end
 
-@implementation HouseAlert_ReactNativeTests
+@implementation HouseAlertTests
 
 - (BOOL)findSubviewInView:(UIView *)view matching:(BOOL(^)(UIView *view))test
 {

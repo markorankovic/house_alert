@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { LoginContext, LoginProvider } from './src/context/login-context'
 import { PeopleProvider } from './src/context/people-context'
 import HomeScreen from './src/screens/home-screen'
