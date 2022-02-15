@@ -3,13 +3,8 @@ import { LoginContext, LoginProvider } from './src/context/login-context'
 import { PeopleProvider } from './src/context/people-context'
 import HomeScreen from './src/screens/home-screen'
 import LoginScreen from './src/screens/login-screen'
-import { Notifications } from 'react-native-notifications'
 
 export default function App() {
-  useEffect(() => {
-    Notifications.registerRemoteNotifications()
-  }, [])
-
   return (
     <PeopleProvider>
       <LoginProvider>
