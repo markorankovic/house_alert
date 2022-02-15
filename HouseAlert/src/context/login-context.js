@@ -11,6 +11,7 @@ export const LoginProvider = ({children}) => {
     async function login(id) {
         return new Promise(function(resolve, reject) {
             people.forEach(person => {
+                console.log(person)
                 if (person.id == id) {
                     setState({
                         user: {
