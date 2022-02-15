@@ -31,7 +31,16 @@ export const LoginProvider = ({children}) => {
     }
 
     return (
-        <LoginContext.Provider value={{ user: state ? state.user : null, loggedIn: state != null, login: login, logout: logout }}>
+        <LoginContext.Provider 
+            value={
+                { 
+                    user: state ? state.user : null, 
+                    loggedIn: state != null, 
+                    login: login, 
+                    logout: logout
+                }
+            }
+        >
             {children}
         </LoginContext.Provider>
     )
