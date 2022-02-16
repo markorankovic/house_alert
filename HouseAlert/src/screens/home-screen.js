@@ -1,15 +1,22 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { FlatList, Button, View, Text, StyleSheet } from 'react-native'
 import { LoginContext } from '../context/login-context'
 import { PeopleContext } from '../context/people-context'
 
 export default function HomeScreen() {
-    const people = useContext(PeopleContext)
+    const peopleContext = useContext(PeopleContext)
+    const people = peopleContext.people
     const login = useContext(LoginContext)
+    const notify = peopleContext.notify
+    const register = peopleContext.register
 
     function logout() {
         login.logout()
     }
+
+    useEffect(() => {
+        register(login.user.id)
+    }, [])
 
     return (
         <View style={styles.container}>
@@ -26,6 +33,7 @@ export default function HomeScreen() {
                                 onPress={
                                     () => {
                                         console.log("Alerting " + item.name)
+                                        notify(login.user.id, item.id)
                                     }
                                 } 
                             />

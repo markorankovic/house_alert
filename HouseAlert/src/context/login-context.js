@@ -6,7 +6,7 @@ export const LoginContext = React.createContext()
 export const LoginProvider = ({children}) => {
     const [state, setState] = useState(null)
 
-    const people = useContext(PeopleContext)
+    const people = useContext(PeopleContext).people
 
     async function login(id) {
         return new Promise(function(resolve, reject) {
