@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Notifications } from 'react-native-notifications'
+import { NetworkContext } from './network-context'
 
 export const PeopleContext = React.createContext()
 
@@ -7,6 +8,8 @@ let client
 
 export const PeopleProvider = ({ children }) => {
     const [people, setPeople] = useState([])
+
+    const networkContext = useContext(NetworkContext)
 
     function notify(from, to) {
         console.log("Notifying from id: ", from, "to id: ", to)
@@ -25,12 +28,27 @@ export const PeopleProvider = ({ children }) => {
         })
     }
 
+    function connected() {
+        if (!client) {
+            return false
+        }
+        return client.readyState === WebSocket.OPEN
+    }
+
     function initPeople(people) {
         setPeople(people)
     }
 
     useEffect(() => {
-        client = new WebSocket('ws://10.0.2.2:8082')
+        if (!networkContext.hostIP) {
+            client?.close()
+            client = null
+            return
+        }
+
+        console.log('networkContext.hostIP: ', networkContext.hostIP)
+
+        client = new WebSocket('ws://' + networkContext.hostIP + ':8082')
 
         client.addEventListener('open', () => {
             console.log('Connected to the server!')
@@ -43,11 +61,11 @@ export const PeopleProvider = ({ children }) => {
                 case 'notification': triggerAlertNotification(payload.data.from)
             }
         })        
-    }, [])
+    }, [networkContext.hostIP])
 
     return (
         <PeopleContext.Provider
-            value={{people: people, notify: notify, register: register}}
+            value={{people: people, notify: notify, register: register, connected: connected}}
         >
             {children}
         </PeopleContext.Provider>

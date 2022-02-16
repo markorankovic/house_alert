@@ -6,23 +6,29 @@ export const LoginContext = React.createContext()
 export const LoginProvider = ({children}) => {
     const [state, setState] = useState(null)
 
-    const people = useContext(PeopleContext).people
+    const peopleContext = useContext(PeopleContext)
+
+    const people = peopleContext.people
 
     async function login(id) {
         return new Promise(function(resolve, reject) {
+            const connected = peopleContext.connected()
+            if (!connected) {
+                return reject("Login failure")
+            }
             people.forEach(person => {
-                console.log(person)
                 if (person.id == id) {
                     setState({
                         user: {
                             id: person.id,
-                            name: person.name
+                            name: person.name,
+                            connected: connected
                         }
                     })
-                    resolve("Login success")
+                    return resolve("Login success")
                 }
             })
-            reject("Login failure")
+            return reject("Login failure")
         })
     }
 
@@ -36,7 +42,7 @@ export const LoginProvider = ({children}) => {
             value={
                 { 
                     user: state ? state.user : null, 
-                    loggedIn: state != null, 
+                    loggedIn: state != null && peopleContext.connected(), 
                     login: login, 
                     logout: logout
                 }
