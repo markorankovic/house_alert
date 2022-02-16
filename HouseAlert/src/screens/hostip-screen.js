@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { View, TextInput, Button } from 'react-native'
+import { View, TextInput, Button, StyleSheet } from 'react-native'
 import { NetworkContext } from '../context/network-context'
 
 export default function HostIPScreen() {
@@ -13,9 +13,17 @@ export default function HostIPScreen() {
     }
 
     return (
-        <View>
+        <View style={styles.view}>
             <TextInput placeholder='Type in the host IP address' value={ip} onChangeText={setIP} />
             <Button title='Continue' onPress={setHostIP} />
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    view: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+    }
+})
