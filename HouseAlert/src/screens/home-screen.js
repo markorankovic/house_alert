@@ -1,12 +1,14 @@
 import React, { useContext, useEffect } from 'react'
-import { FlatList, Button, View, Text, StyleSheet } from 'react-native'
+import { FlatList, Button, View, Text, StyleSheet, Image } from 'react-native'
 import { LoginContext } from '../context/login-context'
+import { NetworkContext } from '../context/network-context'
 import { PeopleContext } from '../context/people-context'
 
 export default function HomeScreen() {
     const peopleContext = useContext(PeopleContext)
     const people = peopleContext.people
     const login = useContext(LoginContext)
+    const network = useContext(NetworkContext)
     const notify = peopleContext.notify
     const register = peopleContext.register
 
@@ -27,16 +29,19 @@ export default function HomeScreen() {
                 data={people?.filter(person => person.id !== login.user.id) ?? []}
                 renderItem={
                     ({item}) => (
-                        <View style={styles.button}>
-                            <Button
-                                title={item.name}
-                                onPress={
-                                    () => {
-                                        console.log("Alerting " + item.name)
-                                        notify(login.user.id, item.id)
-                                    }
-                                } 
-                            />
+                        <View>
+                            <Image style={{width: 50, height: 50}} source={{uri: 'http://' + network.hostIP + ':3000/avatar/' + item.avatar}} />
+                            <View style={styles.button}>
+                                <Button
+                                    title={item.name}
+                                    onPress={
+                                        () => {
+                                            console.log("Alerting " + item.name)
+                                            notify(login.user.id, item.id)
+                                        }
+                                    } 
+                                />
+                            </View>
                         </View>
                     )
                 }

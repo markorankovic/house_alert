@@ -2,7 +2,7 @@ const WebSocket = require('ws')
 
 const wss = new WebSocket.Server({ port: 8082 })
 
-var users = require('./mockPeople.json').people
+var users = require('./simpsons/mockPeople.json').people
 
 function getUserName(id) {
     return users.find(user => user.id == id).name
@@ -44,3 +44,14 @@ wss.on('connection', function(ws) {
         console.log('Client has disconnected')
     })
 })
+
+const express = require('express')
+const app = express()
+const port = 3000
+
+app.get('/avatar/:name', (req, res) => {
+    const name = req.params['name']
+    res.sendFile('./simpsons/' + name, { root: __dirname })
+})
+
+app.listen(port, () => {})
