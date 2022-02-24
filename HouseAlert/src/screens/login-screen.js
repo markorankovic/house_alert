@@ -2,10 +2,12 @@ import React, { useContext, useState } from 'react'
 import { Button, View, TextInput, StyleSheet } from 'react-native'
 import { LoginContext } from '../context/login-context'
 import { NetworkContext } from '../context/network-context'
+import { PeopleContext } from '../context/people-context'
 
 export default function LoginScreen() {
     const loginContext = useContext(LoginContext)
     const networkContext = useContext(NetworkContext)
+    const peopleContext = useContext(PeopleContext)
     
     const [id, setID] = useState(null)
 
@@ -18,6 +20,7 @@ export default function LoginScreen() {
 
     function changeHostIP() {
         networkContext.setHostIP(null)
+        peopleContext.disconnect()
     }
 
     return (
@@ -33,7 +36,7 @@ export default function LoginScreen() {
             />
             <Button 
                 title='Change Host IP'
-                onPress={changeHostIP} 
+                onPress={changeHostIP}
             />
         </View>
     )

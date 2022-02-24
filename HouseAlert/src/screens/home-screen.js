@@ -17,7 +17,9 @@ export default function HomeScreen() {
     }
 
     useEffect(() => {
-        register(login.user.id)
+        if (login?.user?.id) {
+            register(login.user.id)
+        }
     }, [])
 
     return (
