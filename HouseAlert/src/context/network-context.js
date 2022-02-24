@@ -7,16 +7,13 @@ export const NetworkProvider = ({children}) => {
     const [hostIP, setHostIP] = useState(null)
 
     useEffect(() => {
-        if (hostIP) {
-            return
-        }
-        AsyncStorage.getItem('hostIP').then((ip) => {
-            setHostIP(ip)
+        AsyncStorage.setItem('hostIP', hostIP)
+        .then(() => {
+            console.log('Saving host IP')
         })
-    }, [])
-
-    useEffect(() => {
-        AsyncStorage.setItem('hostIP', hostIP).then()
+        .catch(() => {
+            console.log('Error saving host IP')
+        })    
     }, [hostIP])
 
     return (

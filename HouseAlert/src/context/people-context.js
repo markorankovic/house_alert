@@ -8,6 +8,7 @@ let client
 
 export const PeopleProvider = ({ children }) => {
     const [people, setPeople] = useState([])
+    const [connected, setConnected] = useState(false)
 
     const networkContext = useContext(NetworkContext)
 
@@ -28,44 +29,48 @@ export const PeopleProvider = ({ children }) => {
         })
     }
 
-    function connected() {
-        if (!client) {
-            return false
-        }
-        return client.readyState === WebSocket.OPEN
-    }
-
     function initPeople(people) {
         setPeople(people)
     }
 
-    useEffect(() => {
-        if (!networkContext.hostIP) {
-            client?.close()
-            client = null
-            return
-        }
+    async function disconnect() {
+        client?.close()
+    }
 
-        console.log('networkContext.hostIP: ', networkContext.hostIP)
+    async function connect(to = hostIP) {
+        return new Promise(function (resolve, reject) {
+            client = new WebSocket('ws://' + to + ':8082')
+            networkContext.setHostIP(to)
 
-        client = new WebSocket('ws://' + networkContext.hostIP + ':8082')
+            client.addEventListener('open', () => {
+                console.log('Connected to the server!')
+                setConnected(true)
+                return resolve(true)
+            })
+    
+            client.addEventListener('error', () => {
+                return reject('Failed to connect to server')
+            })
 
-        client.addEventListener('open', () => {
-            console.log('Connected to the server!')
+            client.addEventListener('close', () => {
+                client = null
+                setConnected(false)
+            })
+            
+            client.addEventListener('message', message => {
+                const payload = JSON.parse(message.data)
+                switch (payload.type) {
+                    case 'people': initPeople(payload.data.people); return
+                    case 'notification': triggerAlertNotification(payload.data.from)
+                }
+            })
+    
         })
-        
-        client.addEventListener('message', message => {
-            const payload = JSON.parse(message.data)
-            switch (payload.type) {
-                case 'people': initPeople(payload.data.people); return
-                case 'notification': triggerAlertNotification(payload.data.from)
-            }
-        })        
-    }, [networkContext.hostIP])
+    }
 
     return (
         <PeopleContext.Provider
-            value={{people: people, notify: notify, register: register, connected: connected}}
+            value={{people: people, notify: notify, register: register, connected: connected, connect: connect, disconnect: disconnect}}
         >
             {children}
         </PeopleContext.Provider>
