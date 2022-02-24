@@ -10,7 +10,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import ReconnectScreen from './src/screens/reconnect-screen'
 
 export default function App() {
-  Notifications.registerRemoteNotifications()
+  Notifications.registerRemoteNotifications({
+    notificationCenter: true,
+    lockScreen: true
+  })
 
   return (
     <NetworkProvider>
