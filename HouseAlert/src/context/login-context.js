@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import React, { useEffect, useContext, useState } from 'react'
+import { NetworkContext } from './network-context'
 import { PeopleContext } from './people-context'
 
 export const LoginContext = React.createContext()
@@ -8,6 +9,7 @@ export const LoginProvider = ({children}) => {
     const [state, setState] = useState(null)
 
     const peopleContext = useContext(PeopleContext)
+    const networkContext = useContext(NetworkContext)
 
     const people = peopleContext.people
 
@@ -26,7 +28,7 @@ export const LoginProvider = ({children}) => {
 
     async function login(id) {
         return new Promise(function(resolve, reject) {
-            if (!peopleContext.connected) {
+            if (!networkContext.connected) {
                 console.log('Error login: Not connected')
                 return reject(reason => console.log("Login failure: " + reason))
             }
@@ -37,7 +39,7 @@ export const LoginProvider = ({children}) => {
                         user: {
                             id: person.id,
                             name: person.name,
-                            connected: peopleContext.connected
+                            connected: networkContext.connected
                         }
                     })
                     return resolve("Login success")
@@ -64,7 +66,7 @@ export const LoginProvider = ({children}) => {
             value={
                 { 
                     user: state ? state.user : null, 
-                    loggedIn: state != null && peopleContext.connected, 
+                    loggedIn: state?.user?.id != null && networkContext.connected, 
                     login: login, 
                     logout: logout
                 }

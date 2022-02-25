@@ -16,13 +16,13 @@ export default function App() {
   })
 
   return (
-    <NetworkProvider>
-      <PeopleProvider>
-        <LoginProvider>
-          <Content />
-        </LoginProvider>
-      </PeopleProvider>
-    </NetworkProvider>
+    <PeopleProvider>
+      <NetworkProvider>
+          <LoginProvider>
+            <Content />
+          </LoginProvider>
+      </NetworkProvider>
+    </PeopleProvider>
   )
 }
 
@@ -55,10 +55,10 @@ function Content() {
     .catch(() => {
       console.log('No ID to log in with')
     })  
-  }, [peopleContext.connected, peopleContext.people])
+  }, [networkContext.connected, peopleContext.people])
 
   function getScreen() {
-    if (peopleContext.connected) {
+    if (networkContext.connected) {
       if (loginContext.loggedIn) {
         return <HomeScreen />
       } else {

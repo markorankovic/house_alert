@@ -1,13 +1,12 @@
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import React, { useContext, useState } from 'react'
 import { Button, View, TextInput, StyleSheet } from 'react-native'
 import { LoginContext } from '../context/login-context'
 import { NetworkContext } from '../context/network-context'
-import { PeopleContext } from '../context/people-context'
 
 export default function LoginScreen() {
     const loginContext = useContext(LoginContext)
     const networkContext = useContext(NetworkContext)
-    const peopleContext = useContext(PeopleContext)
     
     const [id, setID] = useState(null)
 
@@ -19,8 +18,9 @@ export default function LoginScreen() {
     }
 
     function changeHostIP() {
+        AsyncStorage.removeItem('hostIP')
         networkContext.setHostIP(null)
-        peopleContext.disconnect()
+        networkContext.disconnect()
     }
 
     return (

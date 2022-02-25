@@ -1,15 +1,15 @@
 import React, { useContext, useState } from 'react'
 import { View, TextInput, Button, StyleSheet } from 'react-native'
-import { PeopleContext } from '../context/people-context'
+import { NetworkContext } from '../context/network-context'
 
 export default function HostIPScreen() {
     const [ip, setIP] = useState('')
 
-    const peopleContext = useContext(PeopleContext)
+    const networkContext = useContext(NetworkContext)
 
     function connectToIP() {
         console.log(ip)
-        peopleContext.connect(ip)
+        networkContext.connect(ip)
     }
 
     return (

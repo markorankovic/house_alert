@@ -9,8 +9,8 @@ export default function HomeScreen() {
     const people = peopleContext.people
     const login = useContext(LoginContext)
     const network = useContext(NetworkContext)
-    const notify = peopleContext.notify
-    const register = peopleContext.register
+    const notify = network.notify
+    const register = network.register
 
     function logout() {
         login.logout()

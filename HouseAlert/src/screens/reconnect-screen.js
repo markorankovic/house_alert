@@ -1,15 +1,18 @@
 import React, { useContext, useEffect } from "react"
 import { View, Text } from 'react-native'
 import { NetworkContext } from "../context/network-context"
-import { PeopleContext } from "../context/people-context"
 
 export default function ReconnectScreen() {
-    const peopleContext = useContext(PeopleContext)
     const networkContext = useContext(NetworkContext)
 
-
     async function reconnect() {
-        await peopleContext.connect(networkContext.hostIP).catch(() => {
+        console.log("Reconnecting with: ", networkContext.hostIP)
+        await networkContext.connect(networkContext.hostIP)
+        .then(() => {
+            console.log('Reconnection success')
+        })
+        .catch(() => {
+            console.log("Reconnecting")
             reconnect()
         })
     }
