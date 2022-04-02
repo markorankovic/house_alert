@@ -18,9 +18,9 @@ export default function App() {
   return (
     <PeopleProvider>
       <NetworkProvider>
-          <LoginProvider>
-            <Content />
-          </LoginProvider>
+        <LoginProvider>
+          <Content />
+        </LoginProvider>
       </NetworkProvider>
     </PeopleProvider>
   )
