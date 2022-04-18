@@ -1,112 +1,77 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
+import React, { useContext, useEffect } from 'react'
+import { LoginContext, LoginProvider } from './src/context/login-context'
+import { PeopleContext, PeopleProvider } from './src/context/people-context'
+import HomeScreen from './src/screens/home-screen'
+import LoginScreen from './src/screens/login-screen'
+import { Notifications } from 'react-native-notifications'
+import HostIPScreen from './src/screens/hostip-screen'
+import { NetworkContext, NetworkProvider } from './src/context/network-context'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import ReconnectScreen from './src/screens/reconnect-screen'
 
-import React from 'react';
-import type {Node} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
-
-const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+export default function App() {
+  Notifications.registerRemoteNotifications({
+    notificationCenter: true,
+    lockScreen: true
+  })
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-};
+    <PeopleProvider>
+      <NetworkProvider>
+        <LoginProvider>
+          <Content />
+        </LoginProvider>
+      </NetworkProvider>
+    </PeopleProvider>
+  )
+}
 
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+function Content() {
+  const loginContext = useContext(LoginContext)
+  const networkContext = useContext(NetworkContext)
+  const peopleContext = useContext(PeopleContext)
 
-export default App;
+  console.log(networkContext)
+
+  useEffect(() => {
+    console.log('Run once')
+    AsyncStorage.getItem('hostIP')
+    .then((ip) => {
+        networkContext.setHostIP(ip)
+    })
+  }, [])
+
+  useEffect(() => {
+    if (loginContext.loggedIn) {
+      return
+    }
+    AsyncStorage.getItem('id')
+    .then((id) => {
+        console.log('ID: ', id)
+        loginContext.login(id).then(() => {
+            console.log('Logging in with cache')
+        }).catch(error => console.log('Error logging in: ', error))
+    })
+    .catch(() => {
+      console.log('No ID to log in with')
+    })  
+  }, [networkContext.connected, peopleContext.people])
+
+  function getScreen() {
+    if (networkContext.connected) {
+      if (loginContext.loggedIn) {
+        return <HomeScreen />
+      } else {
+        return <LoginScreen />
+      } 
+    } else {
+      if (networkContext.hostIP) {
+        return <ReconnectScreen />  
+      } else {
+        return <HostIPScreen />
+      }
+    }
+  }
+
+  return getScreen()
+}
