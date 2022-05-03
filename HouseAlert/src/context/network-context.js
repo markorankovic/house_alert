@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { PeopleContext } from './people-context'
+import { Notifications } from 'react-native-notifications'
 
 export const NetworkContext = React.createContext()
 
