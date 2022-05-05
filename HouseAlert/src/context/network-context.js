@@ -37,7 +37,7 @@ export const NetworkProvider = ({children}) => {
 
     async function connect(to) {
         return new Promise(function (resolve, reject) {
-            const addr = 'ws://' + to + ':8082'
+            const addr = 'ws://' + to + ':5000'
             console.log(addr)
             const connection = new WebSocket(addr)
 

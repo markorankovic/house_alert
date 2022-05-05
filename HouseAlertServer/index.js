@@ -1,6 +1,6 @@
 const WebSocket = require('ws')
 
-const wss = new WebSocket.Server({ port: 8082 })
+const wss = new WebSocket.Server({ port: 5000 })
 
 var users = require('./simpsons/mockPeople.json').people
 
