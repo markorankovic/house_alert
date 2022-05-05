@@ -37,7 +37,9 @@ export const NetworkProvider = ({children}) => {
 
     async function connect(to) {
         return new Promise(function (resolve, reject) {
-            const connection = new WebSocket('ws://' + to + ':8082')
+            const addr = 'ws://' + to + ':8082'
+            console.log(addr)
+            const connection = new WebSocket(addr)
 
             connection.addEventListener('open', () => {
                 setHostIP(to)
