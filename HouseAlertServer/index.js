@@ -1,6 +1,17 @@
+var admin = require("firebase-admin");
+var firebase = require('firebase-admin/messaging')
+
+var serviceAccount = require("./house-alert-notifications-firebase-adminsdk-zohit-bc151baa75.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  projectId: 'house-alert-notifications'
+});
+
+
 const WebSocket = require('ws')
 
-const wss = new WebSocket.Server({ port: 5000 })
+const wss = new WebSocket.Server({ port: 6000 })
 
 var users = require('./simpsons/mockPeople.json').people
 
@@ -14,10 +25,29 @@ function notify(payload) {
         const to = getUserName(payload.data.to)
         console.log(from + " notifies " + to)
         const client = clients[payload.data.to]
-        client.send(JSON.stringify({type: 'notification', data: { from: from }}))    
-    } catch (error) {
-        console.log('Error: ' + error)
-    }
+        
+        const message = {
+        data: {
+            score: '850',
+            time: '2:45'
+        },
+        token: payload.data.deviceToken
+        };
+
+        // Send a message to the device corresponding to the provided
+        // registration token.
+        console.log("firebase.getMessaging", firebase.getMessaging)
+        firebase.getMessaging().send(message)
+        .then((response) => {
+            // Response is a message ID string.
+            console.log('Successfully sent message:', response);
+        })
+        .catch((error) => {
+            console.log('Error sending message:', error);
+        });
+        } catch (error) {
+            console.log('Error: ' + error)
+        }
 }
 
 function register(payload, ws) {

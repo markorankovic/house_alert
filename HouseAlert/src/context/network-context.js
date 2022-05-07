@@ -15,7 +15,7 @@ export const NetworkProvider = ({children}) => {
 
     function notify(from, to) {
         console.log("Notifying from id: ", from, "to id: ", to)
-        client.send(JSON.stringify({type: 'notification', data: { from: from, to: to }}))
+        client.send(JSON.stringify({type: 'notification', data: { from: from, to: to, deviceToken: global.deviceToken }}))
     }
 
     function register(id) {
@@ -37,7 +37,7 @@ export const NetworkProvider = ({children}) => {
 
     async function connect(to) {
         return new Promise(function (resolve, reject) {
-            const addr = 'ws://' + to + ':5000'
+            const addr = 'ws://' + to + ':6000'
             console.log(addr)
             const connection = new WebSocket(addr)
 

@@ -15,6 +15,18 @@ export default function App() {
     lockScreen: true
   })
 
+  // Request permissions on iOS, refresh token on Android
+  Notifications.registerRemoteNotifications()
+
+  Notifications.events().registerRemoteNotificationsRegistered((event) => {
+      // TODO: Send the token to my server so it could send back push notifications...
+      console.log("Device Token Received", event.deviceToken)
+      global.deviceToken = event.deviceToken
+  })
+  Notifications.events().registerRemoteNotificationsRegistrationFailed((event) => {
+      console.error(event)
+  })  
+
   return (
     <PeopleProvider>
       <NetworkProvider>
