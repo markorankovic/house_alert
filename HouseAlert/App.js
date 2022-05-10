@@ -10,13 +10,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import ReconnectScreen from './src/screens/reconnect-screen'
 
 export default function App() {
+
   Notifications.registerRemoteNotifications({
     notificationCenter: true,
-    lockScreen: true
+    lockScreen: true,
+    badge: true,
+    alert: true,
+    sound: true
   })
-
-  // Request permissions on iOS, refresh token on Android
-  Notifications.registerRemoteNotifications()
 
   Notifications.events().registerRemoteNotificationsRegistered((event) => {
       // TODO: Send the token to my server so it could send back push notifications...

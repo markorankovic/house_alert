@@ -31,7 +31,7 @@ function notify(payload) {
             score: '850',
             time: '2:45'
         },
-        token: payload.data.deviceToken
+        token: "7d7c6264e8e85d07283b3fe14a908e5b0ae877b177b12c816c7a7f53ae9abc97"
         };
 
         // Send a message to the device corresponding to the provided
