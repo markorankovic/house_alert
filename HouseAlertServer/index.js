@@ -1,5 +1,7 @@
+const jsonwebtoken = require('jsonwebtoken')
 var admin = require("firebase-admin");
 var firebase = require('firebase-admin/messaging')
+const axios = require('axios').default
 
 var serviceAccount = require("./house-alert-notifications-firebase-adminsdk-zohit-bc151baa75.json");
 
@@ -7,7 +9,6 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   projectId: 'house-alert-notifications'
 });
-
 
 const WebSocket = require('ws')
 
@@ -26,28 +27,63 @@ function notify(payload) {
         console.log(from + " notifies " + to)
         const client = clients[payload.data.to]
         
-        const message = {
-        data: {
-            score: '850',
-            time: '2:45'
-        },
-        token: "7d7c6264e8e85d07283b3fe14a908e5b0ae877b177b12c816c7a7f53ae9abc97"
-        };
+        // console.log("firebase.getMessaging", firebase.getMessaging)
+        // firebase.getMessaging().send(message)
+        // .then((response) => {
+        //     console.log('Successfully sent message:', response);
+        // })
+        // .catch((error) => {
+        //     console.log('Error sending message:', error);
+        // });
 
-        // Send a message to the device corresponding to the provided
-        // registration token.
-        console.log("firebase.getMessaging", firebase.getMessaging)
-        firebase.getMessaging().send(message)
-        .then((response) => {
-            // Response is a message ID string.
-            console.log('Successfully sent message:', response);
-        })
-        .catch((error) => {
-            console.log('Error sending message:', error);
-        });
-        } catch (error) {
-            console.log('Error: ' + error)
+        function readKey() {
+            const fs = require('fs')
+            const path = "./AuthKey_DRQD722R26.p8"
+            return fs.readFileSync(path).toString()
         }
+
+        async function apns() {
+            const URL = 'http://api.sandbox.push.apple.com:443'
+            const deviceToken = payload.data.deviceToken
+            console.log("Device token: ", deviceToken)
+            const authSignToken = readKey()
+            console.log("authSignToken: ", authSignToken)
+            const _payload = {
+                iss: '83XX9TWPTZ'
+            }
+            const signOptions = {
+                keyid: 'DRQD722R26',
+                algorithm: 'ES256'
+            }
+            const jwt = jsonwebtoken.sign(_payload, authSignToken, signOptions)
+            console.log("JWT: ", jwt)
+
+            const path = '/3/device/' + deviceToken
+            const authorization = 'Bearer ' + jwt
+
+            axios({
+                url: URL,
+                method: 'post',
+                headers: {
+                    'scheme': 'https',
+                    'path': path,
+                    'authorization': authorization,
+                    'apns-push-type': 'alert'
+                },
+                data: {
+                    aps: {
+                        alert: 'hello'
+                    }
+                }
+            }).catch(error => console.log('Axios error: ', error))
+        }
+
+        apns()
+        .catch(error => console.log("JWT error: ", error))
+    } catch (error) {
+        console.log('Error: ' + error)
+    }
+
 }
 
 function register(payload, ws) {
@@ -75,7 +111,7 @@ wss.on('connection', function(ws) {
     })
 })
 
-const express = require('express')
+const express = require('express');
 const app = express()
 const port = 3000
 

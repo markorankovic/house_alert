@@ -9,9 +9,12 @@
   "author": "Marko Rankovic",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.27.2",
     "express": "^4.17.2",
     "firebase": "^9.8.0",
     "firebase-admin": "^10.2.0",
+    "jose": "^2.0.5",
+    "jsonwebtoken": "^8.5.1",
     "ws": "^8.5.0"
   }
 }
