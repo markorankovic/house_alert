@@ -78,8 +78,10 @@ function notify(payload) {
             }).catch(error => console.log('Axios error: ', error))
         }
 
-        apns()
-        .catch(error => console.log("JWT error: ", error))
+        // apns()
+        // .catch(error => console.log("JWT error: ", error))
+
+        
     } catch (error) {
         console.log('Error: ' + error)
     }

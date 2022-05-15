@@ -1,3 +1,5 @@
+#import <Firebase.h>
+
 #import "AppDelegate.h"
 
 #import "RNNotifications.h"
@@ -43,6 +45,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [FIRApp configure];
+  
   [RNNotifications startMonitorNotifications];
   
   RCTAppSetupPrepareApp(application);
