@@ -401,7 +401,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
-  - react-native-notifications (from `../node_modules/react-native-notifications`)
+  - react-native-notifications (from `../node_modules/react-native-notifications/react-native-notifications.podspec`)
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -474,7 +474,7 @@ EXTERNAL SOURCES:
   React-logger:
     :path: "../node_modules/react-native/ReactCommon/logger"
   react-native-notifications:
-    :path: "../node_modules/react-native-notifications"
+    :podspec: "../node_modules/react-native-notifications/react-native-notifications.podspec"
   react-native-webview:
     :path: "../node_modules/react-native-webview"
   React-perflogger:
@@ -557,6 +557,6 @@ SPEC CHECKSUMS:
   Yoga: 17cd9a50243093b547c1e539c749928dd68152da
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 8d76eb76a930adfee7eb2bb7b3dfb79490ab8736
+PODFILE CHECKSUM: f57d0ba6838173b9022fc06a923c2a05778f9f01
 
 COCOAPODS: 1.11.3
