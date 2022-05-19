@@ -9,7 +9,6 @@ platform :ios, '11.0'
 install! 'cocoapods', :deterministic_uuids => false
 
 target 'HouseAlert' do
-  pod 'react-native-notifications', :podspec => '../node_modules/react-native-notifications/react-native-notifications.podspec'
   config = use_native_modules!
 
   # Flags change depending on the env values.

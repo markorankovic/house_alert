@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>315722625962-uj2512ek19nar6ore7g62oisgjvjkkph.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.315722625962-uj2512ek19nar6ore7g62oisgjvjkkph</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDb5RYefLJPJzIadB5ikLmLXgMNZztPWUI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>315722625962</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>org.reactjs.native.example.HouseAlert</string>
+	<key>PROJECT_ID</key>
+	<string>house-alert-notifications</string>
+	<key>STORAGE_BUCKET</key>
+	<string>house-alert-notifications.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:315722625962:ios:f27bd3f1b9ae9beda0f1d3</string>
+</dict>
+</plist>

@@ -14,6 +14,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		7699B88040F8A987B510C191 /* libPods-HouseAlert-HouseAlertTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-HouseAlert-HouseAlertTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		AD6C657B2836E57E0052F7AC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AD6C657A2836E57E0052F7AC /* GoogleService-Info.plist */; };
 		ADBBBCCA280DFF2E004CC7C7 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = ADBBBCC9280DFF2E004CC7C7 /* Podfile */; };
 /* End PBXBuildFile section */
 
@@ -42,6 +43,7 @@
 		5DCACB8F33CDC322A6C60F78 /* libPods-HouseAlert.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HouseAlert.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = HouseAlert/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AD278FBD282AC01D008AEF06 /* HouseAlert.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = HouseAlert.entitlements; path = HouseAlert/HouseAlert.entitlements; sourceTree = "<group>"; };
+		AD6C657A2836E57E0052F7AC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "HouseAlert/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ADBBBCC9280DFF2E004CC7C7 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		BDE6778C9364597856F842B8 /* Pods-HouseAlert-HouseAlertTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HouseAlert-HouseAlertTests.release.xcconfig"; path = "Target Support Files/Pods-HouseAlert-HouseAlertTests/Pods-HouseAlert-HouseAlertTests.release.xcconfig"; sourceTree = "<group>"; };
 		CCA53D823186BA17322B2DDA /* Pods-HouseAlert-HouseAlertTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HouseAlert-HouseAlertTests.debug.xcconfig"; path = "Target Support Files/Pods-HouseAlert-HouseAlertTests/Pods-HouseAlert-HouseAlertTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 		13B07FAE1A68108700A75B9A /* HouseAlert */ = {
 			isa = PBXGroup;
 			children = (
+				AD6C657A2836E57E0052F7AC /* GoogleService-Info.plist */,
 				AD278FBD282AC01D008AEF06 /* HouseAlert.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
@@ -249,6 +252,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ADBBBCCA280DFF2E004CC7C7 /* Podfile in Resources */,
+				AD6C657B2836E57E0052F7AC /* GoogleService-Info.plist in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);

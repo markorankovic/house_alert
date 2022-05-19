@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { PeopleContext } from './people-context'
-import { Notifications } from 'react-native-notifications'
 
 export const NetworkContext = React.createContext()
 
@@ -25,10 +24,6 @@ export const NetworkProvider = ({children}) => {
     }
 
     function triggerAlertNotification(name) {
-        Notifications.postLocalNotification({
-            title: "",
-            body: "You've got an alert from " + name,
-        })
     }
 
     async function disconnect() {

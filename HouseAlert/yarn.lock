@@ -5648,11 +5648,6 @@ react-native-gradle-plugin@^0.0.6:
   resolved "https://registry.npmjs.org/react-native-gradle-plugin/-/react-native-gradle-plugin-0.0.6.tgz"
   integrity sha512-eIlgtsmDp1jLC24dRn43hB3kEcZVqx6DUQbR0N1ABXGnMEafm9I3V3dUUeD1vh+Dy5WqijSoEwLNUPLgu5zDMg==
 
-react-native-notifications@^4.3.1:
-  version "4.3.1"
-  resolved "https://registry.npmjs.org/react-native-notifications/-/react-native-notifications-4.3.1.tgz"
-  integrity sha512-A668d+Q0/VQRjmrh+LvDpc/REA8GXgwCijXDCIlDHGMK8enmrtdxY5OANQf1VM3hecf+fD0wYFw2uqL/ZR8jgg==
-
 react-native-webview@^11.18.1:
   version "11.18.1"
   resolved "https://registry.npmjs.org/react-native-webview/-/react-native-webview-11.18.1.tgz"
