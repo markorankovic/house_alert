@@ -14,13 +14,13 @@ export const NetworkProvider = ({children}) => {
 
     function notify(from, to) {
         console.log("Notifying from id: ", from, "to id: ", to)
-        client.send(JSON.stringify({type: 'notification', data: { from: from, to: to, deviceToken: global.deviceToken }}))
+        client.send(JSON.stringify({type: 'notification', data: { from: from, to: to }}))
     }
 
     function register(id) {
         console.log('client: ', client)
         console.log('Registering with id: ', id)
-        client.send(JSON.stringify({type: 'register', data: {id: id, client: client}}))
+        client.send(JSON.stringify({type: 'register', data: { id: id, client: client, deviceToken: global.deviceToken }}))
     }
 
     function triggerAlertNotification(name) {

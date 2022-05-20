@@ -1,11 +1,13 @@
-const jsonwebtoken = require('jsonwebtoken')
-var admin = require("firebase-admin");
-var firebase = require('firebase-admin/messaging')
+const getMessaging = require('firebase-admin/messaging').getMessaging
+
+const admin = require('firebase-admin')
+const initializeApp = require('firebase-admin/app').initializeApp
+
 const axios = require('axios').default
 
 var serviceAccount = require("./house-alert-notifications-firebase-adminsdk-zohit-bc151baa75.json");
 
-admin.initializeApp({
+const firebaseApp = initializeApp({
   credential: admin.credential.cert(serviceAccount),
   projectId: 'house-alert-notifications'
 });
@@ -27,61 +29,17 @@ function notify(payload) {
         console.log(from + " notifies " + to)
         const client = clients[payload.data.to]
         
-        // console.log("firebase.getMessaging", firebase.getMessaging)
-        // firebase.getMessaging().send(message)
-        // .then((response) => {
-        //     console.log('Successfully sent message:', response);
-        // })
-        // .catch((error) => {
-        //     console.log('Error sending message:', error);
-        // });
-
-        function readKey() {
-            const fs = require('fs')
-            const path = "./AuthKey_DRQD722R26.p8"
-            return fs.readFileSync(path).toString()
+        const message = {
+            notification: {
+                title: "House Alert",
+                body: `You received an alert from ${from}!`
+            },
+            token: client.data.deviceToken
         }
 
-        async function apns() {
-            const URL = 'http://api.sandbox.push.apple.com:443'
-            const deviceToken = payload.data.deviceToken
-            console.log("Device token: ", deviceToken)
-            const authSignToken = readKey()
-            console.log("authSignToken: ", authSignToken)
-            const _payload = {
-                iss: '83XX9TWPTZ'
-            }
-            const signOptions = {
-                keyid: 'DRQD722R26',
-                algorithm: 'ES256'
-            }
-            const jwt = jsonwebtoken.sign(_payload, authSignToken, signOptions)
-            console.log("JWT: ", jwt)
-
-            const path = '/3/device/' + deviceToken
-            const authorization = 'Bearer ' + jwt
-
-            axios({
-                url: URL,
-                method: 'post',
-                headers: {
-                    'scheme': 'https',
-                    'path': path,
-                    'authorization': authorization,
-                    'apns-push-type': 'alert'
-                },
-                data: {
-                    aps: {
-                        alert: 'hello'
-                    }
-                }
-            }).catch(error => console.log('Axios error: ', error))
-        }
-
-        // apns()
-        // .catch(error => console.log("JWT error: ", error))
-
-        
+        getMessaging().send(message)
+        .then(response => console.log("Response: ", response))
+        .catch(error => console.log("Error: ", error))
     } catch (error) {
         console.log('Error: ' + error)
     }
@@ -89,7 +47,8 @@ function notify(payload) {
 }
 
 function register(payload, ws) {
-    clients[payload.data.id] = ws
+    clients[payload.data.id] = { socket: ws, data: payload.data }
+    console.log('clients[payload.data.id]: ', clients[payload.data.id])
 }
 
 var clients = {}
@@ -103,7 +62,7 @@ wss.on('connection', function(ws) {
     ws.on('message', message => {
         const payload = JSON.parse(message)
         switch (payload.type) {
-            case 'notification': notify(payload)
+            case 'notification': notify(payload); return
             case 'register': register(payload, ws)
         }
     })

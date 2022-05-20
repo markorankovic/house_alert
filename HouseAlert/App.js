@@ -7,8 +7,16 @@ import HostIPScreen from './src/screens/hostip-screen'
 import { NetworkContext, NetworkProvider } from './src/context/network-context'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import ReconnectScreen from './src/screens/reconnect-screen'
+import messaging from '@react-native-firebase/messaging';
 
 export default function App() {
+
+  useEffect(() => {
+    messaging().getToken().then(token => { 
+      console.log("Token: ", token)
+      global.deviceToken = token
+    })
+  }, [])
 
   return (
     <PeopleProvider>
