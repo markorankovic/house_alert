@@ -28,7 +28,7 @@ export default function HomeScreen() {
             <Text>Who do you want to alert?</Text>
             <FlatList
                 style={styles.list}
-                data={people}
+                data={people.filter(person => person.name != login?.user?.name )}
                 renderItem={
                     ({item}) => (
                         <View>
