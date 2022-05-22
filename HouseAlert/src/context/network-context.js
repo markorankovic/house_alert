@@ -36,6 +36,10 @@ export const NetworkProvider = ({children}) => {
             console.log(addr)
             const connection = new WebSocket(addr)
 
+            connection.addEventListener('error', (ws, ev) => {
+                console.log('Connection error: ', ev)
+            })
+
             connection.addEventListener('open', () => {
                 setHostIP(to)
                 console.log('Connected to the server!')
