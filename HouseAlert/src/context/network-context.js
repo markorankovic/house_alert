@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { PeopleContext } from './people-context'
+import messaging from '@react-native-firebase/messaging';
+import { Alert } from 'react-native';
 
 export const NetworkContext = React.createContext()
 
@@ -11,6 +13,14 @@ export const NetworkProvider = ({children}) => {
     const peopleContext = useContext(PeopleContext)
 
     const [hostIP, setHostIP] = useState(null)
+
+    useEffect(() => {
+        messaging().onMessage((message) => {
+            console.log("Remote message received: ", message)
+            const notification = message.notification
+            Alert.alert(notification.body)
+        })
+    }, [])
 
     function notify(from, to) {
         console.log("Notifying from id: ", from, "to id: ", to)
