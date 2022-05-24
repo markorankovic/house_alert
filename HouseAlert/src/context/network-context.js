@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { PeopleContext } from './people-context'
-import { Notifications } from 'react-native-notifications'
+import messaging from '@react-native-firebase/messaging';
+import { Alert } from 'react-native';
 
 export const NetworkContext = React.createContext()
 
@@ -13,6 +14,14 @@ export const NetworkProvider = ({children}) => {
 
     const [hostIP, setHostIP] = useState(null)
 
+    useEffect(() => {
+        messaging().onMessage((message) => {
+            console.log("Remote message received: ", message)
+            const notification = message.notification
+            Alert.alert(notification.body)
+        })
+    }, [])
+
     function notify(from, to) {
         console.log("Notifying from id: ", from, "to id: ", to)
         client.send(JSON.stringify({type: 'notification', data: { from: from, to: to }}))
@@ -21,14 +30,10 @@ export const NetworkProvider = ({children}) => {
     function register(id) {
         console.log('client: ', client)
         console.log('Registering with id: ', id)
-        client.send(JSON.stringify({type: 'register', data: {id: id, client: client}}))
+        client.send(JSON.stringify({type: 'register', data: { id: id, client: client, deviceToken: global.deviceToken }}))
     }
 
     function triggerAlertNotification(name) {
-        Notifications.postLocalNotification({
-            title: "",
-            body: "You've got an alert from " + name,
-        })
     }
 
     async function disconnect() {
@@ -37,9 +42,13 @@ export const NetworkProvider = ({children}) => {
 
     async function connect(to) {
         return new Promise(function (resolve, reject) {
-            const addr = 'ws://' + to + ':5000'
+            const addr = 'ws://' + to + ':6000'
             console.log(addr)
             const connection = new WebSocket(addr)
+
+            connection.addEventListener('error', (ws, ev) => {
+                console.log('Connection error: ', ev)
+            })
 
             connection.addEventListener('open', () => {
                 setHostIP(to)

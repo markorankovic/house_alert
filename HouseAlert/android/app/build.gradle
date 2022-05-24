@@ -290,7 +290,6 @@ dependencies {
         implementation jscFlavor
     }
 
-    implementation project(':react-native-notifications')
     implementation 'com.google.firebase:firebase-core:16.0.0'
 }
 

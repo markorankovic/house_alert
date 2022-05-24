@@ -3,17 +3,33 @@ import { LoginContext, LoginProvider } from './src/context/login-context'
 import { PeopleContext, PeopleProvider } from './src/context/people-context'
 import HomeScreen from './src/screens/home-screen'
 import LoginScreen from './src/screens/login-screen'
-import { Notifications } from 'react-native-notifications'
 import HostIPScreen from './src/screens/hostip-screen'
 import { NetworkContext, NetworkProvider } from './src/context/network-context'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import ReconnectScreen from './src/screens/reconnect-screen'
+import messaging from '@react-native-firebase/messaging';
 
 export default function App() {
-  Notifications.registerRemoteNotifications({
-    notificationCenter: true,
-    lockScreen: true
-  })
+
+  async function requestUserPermission() {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+  
+    if (enabled) {
+      console.log('Authorization status:', authStatus);
+    }
+  }  
+
+  useEffect(() => {
+    requestUserPermission().then(() => {
+      messaging().getToken().then(token => { 
+        console.log("Token: ", token)
+        global.deviceToken = token
+      })  
+    })
+  }, [])
 
   return (
     <PeopleProvider>

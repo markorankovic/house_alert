@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "315722625962",
+    "project_id": "house-alert-notifications",
+    "storage_bucket": "house-alert-notifications.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:315722625962:android:afacc0794923a3cba0f1d3",
+        "android_client_info": {
+          "package_name": "com.housealert"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "315722625962-nr14hsg36cuug06j344n5o1nvge4vf0p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgGJUMHL-vp0EHt-QuEqMUKkJJnXGfeuk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "315722625962-nr14hsg36cuug06j344n5o1nvge4vf0p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
