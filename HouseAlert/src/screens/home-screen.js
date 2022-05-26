@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { FlatList, Button, View, Text, StyleSheet, Image } from 'react-native'
+import { FlatList, Button, View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import { LoginContext } from '../context/login-context'
 import { NetworkContext } from '../context/network-context'
 import { PeopleContext } from '../context/people-context'
@@ -32,18 +32,22 @@ export default function HomeScreen() {
                 renderItem={
                     ({item}) => (
                         <View>
-                            <Image style={{width: 50, height: 50}} source={{uri: 'http://' + network.hostIP + ':3000/avatar/' + item.avatar}} />
-                            <View style={styles.button}>
-                                <Button
-                                    title={item.name}
-                                    onPress={
-                                        () => {
-                                            console.log("Alerting " + item.name)
-                                            notify(login.user.id, item.id)
-                                        }
-                                    } 
+                            <TouchableOpacity
+                                onPress={
+                                    () => {
+                                        console.log("Alerting " + item.name)
+                                        notify(login.user.id, item.id)
+                                    }
+                                }
+                            >
+                                <Image 
+                                    style={{width: 50, height: 50}} 
+                                    source={{uri: 'http://' + network.hostIP + ':3000/avatar/' + item.avatar}} 
                                 />
-                            </View>
+                                <View style={styles.button}>
+                                    <Text>{item.name}</Text>
+                                </View>
+                            </TouchableOpacity>
                         </View>
                     )
                 }
@@ -69,6 +73,7 @@ const styles = StyleSheet.create({
     },
     button: {
         paddingBottom: 10,
+        alignItems: 'center',
     },
     welcome: {
         fontSize: 30,
