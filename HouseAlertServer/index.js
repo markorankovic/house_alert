@@ -27,7 +27,7 @@ function notify(payload) {
         const from = getUserName(payload.data.from)
         const to = getUserName(payload.data.to)
         console.log(from + " notifies " + to)
-        const client = clients[payload.data.to]
+        const client = clients.get(payload.data.to)
         
         const message = {
             notification: {
@@ -47,11 +47,14 @@ function notify(payload) {
 }
 
 function register(payload, ws) {
-    clients[payload.data.id] = { socket: ws, data: payload.data }
-    console.log('clients[payload.data.id]: ', clients[payload.data.id])
+    Array
+    .from(clients.values())
+    ?.filter(client => client.data.deviceToken == payload.data.deviceToken)
+    ?.forEach(client => { clients.delete(client.data.id); console.log("Client with ID " + client.data.id + " has been removed") })
+    clients.set(payload.data.id, { socket: ws, data: payload.data })
 }
 
-var clients = {}
+var clients = new Map()
 
 wss.on('connection', function(ws) {
 
