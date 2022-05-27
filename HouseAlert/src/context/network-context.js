@@ -22,6 +22,10 @@ export const NetworkProvider = ({children}) => {
         })
     }, [])
 
+    function stop() {
+        setHostIP(null)
+    }
+
     function notify(from, to) {
         console.log("Notifying from id: ", from, "to id: ", to)
         client.send(JSON.stringify({type: 'notification', data: { from: from, to: to }}))
@@ -97,7 +101,8 @@ export const NetworkProvider = ({children}) => {
                     connected: client?.OPEN == 1, 
                     connect: connect, 
                     disconnect: disconnect,
-                    notify: notify
+                    notify: notify,
+                    stop: stop,
                 }
             }
         >

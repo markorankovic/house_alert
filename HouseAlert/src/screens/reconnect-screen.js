@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react"
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet, Button } from 'react-native'
 import { NetworkContext } from "../context/network-context"
 
 export default function ReconnectScreen() {
@@ -21,9 +21,22 @@ export default function ReconnectScreen() {
         reconnect()
     }, [])
 
+    const styles = StyleSheet.create({
+        container: {
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center'
+        }
+    })
+
+    function cancel() {
+        networkContext.stop()
+    }
+
     return (
-        <View>
+        <View style={styles.container}>
             <Text>Lost connection to server, reconnecting...</Text>
+            <Button title='Cancel' onPress={cancel} />
         </View>
     )
 }
