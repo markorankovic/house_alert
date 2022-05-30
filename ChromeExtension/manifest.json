@@ -1,0 +1,7 @@
+{
+    "name": "House Alert Server",
+    "description": "Chrome Extension for running an instance of the House Alert Server",
+    "version": "0.0.0",
+    "manifest_version": "2",
+    "author": "Marko Ranković"
+}
