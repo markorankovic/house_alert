@@ -1,11 +1,17 @@
 const { contextBridge } = require('electron')
-const { startServer } = require('./server')
+const { startServer, stopServer } = require('./server')
 
 function start() {
   console.log("Starting server...")
   startServer()
 }
 
+function stop() {
+  console.log("Stopping server...")
+  stopServer()
+}
+
 contextBridge.exposeInMainWorld('myAPI', {
-  start: start
+  start: start,
+  stop: stop
 })

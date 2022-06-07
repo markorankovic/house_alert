@@ -52,10 +52,24 @@ function register(payload, ws) {
     clients.set(payload.data.id, { socket: ws, data: payload.data })
 }
 
-var clients = new Map()
+var clients
+
+var wss
+var avatarServer
+
+function stopServer() {
+    clients.clear()
+    wss.close()
+    wss.clients.forEach(socket => socket.terminate())
+    avatarServer.close()
+}
 
 function startServer() {
-    const wss = new WebSocket.Server({ port: 6000 })
+    startAvatarServer()
+
+    clients = new Map()
+
+    wss = new WebSocket.Server({ port: 6000 })
 
     wss.on('connection', function(ws) {
 
@@ -79,7 +93,7 @@ function startServer() {
 
 function startAvatarServer() {
     const express = require('express');
-    const app = express()
+    app = express()
     const port = 3000
     
     app.get('/avatar/:name', (req, res) => {
@@ -87,9 +101,10 @@ function startAvatarServer() {
         res.sendFile('./simpsons/' + name, { root: __dirname })
     })
     
-    app.listen(port, () => {})
+    avatarServer = app.listen(port, () => {})
 }
 
 module.exports = {
-    startServer: startServer
+    startServer: startServer,
+    stopServer: stopServer
 }
