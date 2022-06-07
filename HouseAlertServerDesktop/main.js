@@ -5,11 +5,13 @@ const path = require('path')
 function createWindow () {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
+    icon: './icon.ico',
+    title: "House Alert Server",
     width: 800,
     height: 600,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
-    }
+    },
   })
 
   // and load the index.html of the app.
