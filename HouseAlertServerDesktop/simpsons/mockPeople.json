@@ -1,0 +1,9 @@
+{
+    "people": [
+        {"id": 1, "name": "Homer", "avatar": "homer.png"},
+        {"id": 2, "name": "Marge", "avatar": "marge.png"},
+        {"id": 3, "name": "Lisa", "avatar": "lisa.png"},
+        {"id": 5, "name": "Bart", "avatar": "bart.png"},
+        {"id": 6, "name": "Maggie", "avatar": "maggie.png"}
+    ]
+}

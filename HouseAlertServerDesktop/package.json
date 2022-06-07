@@ -1,0 +1,31 @@
+{
+  "name": "electron-quick-start",
+  "version": "1.0.0",
+  "description": "A minimal Electron application",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/electron/electron-quick-start",
+  "keywords": [
+    "Electron",
+    "quick",
+    "start",
+    "tutorial",
+    "demo"
+  ],
+  "author": "GitHub",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "^19.0.2"
+  },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "express": "^4.17.2",
+    "firebase": "^9.8.0",
+    "firebase-admin": "^10.2.0",
+    "jose": "^2.0.5",
+    "jsonwebtoken": "^8.5.1",
+    "ws": "^8.5.0"
+  }
+}
