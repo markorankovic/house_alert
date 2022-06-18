@@ -1,6 +1,7 @@
 document.getElementById("startButton").addEventListener('click', () => {
-    window.myAPI.start()
-    document.getElementById("status").textContent = "Online"
+    const port = window.myAPI.start().port
+    const ip = window.myAPI.ip()
+    document.getElementById("status").textContent = "Online at: " + ip + ":" + port
 })
 
 document.getElementById("stopButton").addEventListener('click', () => {

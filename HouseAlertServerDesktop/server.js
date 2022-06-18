@@ -12,7 +12,8 @@ const firebaseApp = initializeApp({
   projectId: 'house-alert-notifications'
 });
 
-const WebSocket = require('ws')
+const WebSocket = require('ws');
+const { request } = require('express');
 
 var users = require('./simpsons/mockPeople.json').people
 
@@ -73,6 +74,8 @@ function startServer() {
 
     wss.on('connection', function(ws) {
 
+        console.log("ws: ", ws)
+
         console.log('New client connected')
     
         ws.send(JSON.stringify({type: 'people', data: { people: users }}))
@@ -88,12 +91,33 @@ function startServer() {
         ws.on('close', () => {
             console.log('Client has disconnected')
         })
-    })    
+    })
+    
+    return wss.address()
+}
+
+function getIP() {
+    const { networkInterfaces } = require('os');
+    const nets = networkInterfaces();
+    const results = Object.create(null);
+    for (const name of Object.keys(nets)) {
+        for (const net of nets[name]) {
+            const familyV4Value = typeof net.family === 'string' ? 'IPv4' : 4
+            if (net.family === familyV4Value && !net.internal) {
+                if (!results[name]) {
+                    results[name] = [];
+                }
+                results[name].push(net.address);
+            }
+        }
+    }
+    return results['WiFi'][0]
 }
 
 function startAvatarServer() {
     const express = require('express');
     app = express()
+    console.log("app: ", app)
     const port = 3000
     
     app.get('/avatar/:name', (req, res) => {
@@ -106,5 +130,6 @@ function startAvatarServer() {
 
 module.exports = {
     startServer: startServer,
-    stopServer: stopServer
+    stopServer: stopServer,
+    getIP: getIP
 }
