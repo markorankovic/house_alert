@@ -111,7 +111,8 @@ function getIP() {
             }
         }
     }
-    return results['WiFi'][0]
+    const ip = results['WiFi'] ?? results['en0']
+    return ip[0]
 }
 
 function startAvatarServer() {
